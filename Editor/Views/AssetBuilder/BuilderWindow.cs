@@ -221,7 +221,7 @@ namespace Unity.Kinematica.Editor
             createButton.clickable.clicked -= CreateButtonClicked;
 
             Selection.selectionChanged -= OnSelectionChanged;
-            m_AnimationLibraryListView.onSelectionChange -= OnLibrarySelectionChanged;
+            m_AnimationLibraryListView.selectionChanged -= OnLibrarySelectionChanged;
 
             if (m_Timeline != null)
             {
@@ -370,7 +370,7 @@ namespace Unity.Kinematica.Editor
                 m_Timeline.GutterTrackAdded += OnGutterTrackCreated;
                 m_Timeline.ForceGutterTrackDisplay += ForceGutterTrackDisplay;
                 m_Timeline.LoadTemplate(rootVisualElement);
-                m_AnimationLibraryListView.onSelectionChange += OnLibrarySelectionChanged;
+                m_AnimationLibraryListView.selectionChanged += OnLibrarySelectionChanged;
 
                 m_PreviewToggle = rootVisualElement.Q<ToolbarToggle>("previewToggle");
                 m_PreviewToggle.SetValueWithoutNotify(m_Timeline.PreviewEnabled);

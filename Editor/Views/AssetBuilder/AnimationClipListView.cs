@@ -28,7 +28,7 @@ namespace Unity.Kinematica.Editor
         public AnimationClipListView()
         {
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
-            onSelectionChange += OnAnimationClipSelectionChanged;
+            selectionChanged += OnAnimationClipSelectionChanged;
         }
 
         void OnAttachToPanel(AttachToPanelEvent evt)

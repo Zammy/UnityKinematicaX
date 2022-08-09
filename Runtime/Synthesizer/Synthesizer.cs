@@ -44,7 +44,7 @@ namespace Unity.Kinematica
         {
             return new MotionSynthesizer()
             {
-                isValid = false
+                isValid = 0
             };
         }
 

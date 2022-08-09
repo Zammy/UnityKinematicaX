@@ -44,22 +44,22 @@ namespace Unity.Kinematica
 
             lastProcessedFrameCount = -1;
 
-            isValid = true;
+            isValid = 1;
 
-            isDebugging = false;
+            isDebugging = 0;
             readDebugMemory = DebugMemory.Create(1024, allocator);
             writeDebugMemory = DebugMemory.Create(1024, allocator);
         }
 
         public void Dispose()
         {
-            if (isValid)
+            if (isValid == 1)
             {
                 arrayMemory.Dispose();
                 readDebugMemory.Dispose();
                 writeDebugMemory.Dispose();
 
-                isValid = false;
+                isValid = 0;
             }
         }
 
@@ -101,9 +101,9 @@ namespace Unity.Kinematica
 
         private int lastProcessedFrameCount;
 
-        bool isValid;
+        byte isValid;
 
-        bool isDebugging;
+        byte isDebugging;
         DebugMemory readDebugMemory;
         DebugMemory writeDebugMemory;
     }

@@ -63,11 +63,11 @@ namespace Unity.Kinematica
             trajectory.ReadFromStream(buffer);
         }
 
-        public bool IsDebugging => isDebugging;
+        public bool IsDebugging => isDebugging == 1;
 
         public void UpdateDebuggingStatus()
         {
-            isDebugging = false;
+            isDebugging = 0;
 
             foreach (SelectedFrameDebugProvider selected in Debugger.frameDebugger.Selection)
             {
@@ -75,7 +75,7 @@ namespace Unity.Kinematica
                 {
                     if (provider.Synthesizer.Equals(ref this))
                     {
-                        isDebugging = true;
+                        isDebugging = 1;
                         break;
                     }
                 }

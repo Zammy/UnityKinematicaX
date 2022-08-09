@@ -4,12 +4,13 @@ using System;
 using Buffer = Unity.SnapshotDebugger.Buffer;
 using Unity.SnapshotDebugger;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 
 namespace Unity.Kinematica
 {
     public struct DebugMemory : IDisposable
     {
-        NativeList<DebugCostRecord> costRecords;
+        UnsafeList<DebugCostRecord> costRecords;
         Buffer buffer;
         int group;
         ushort version;
@@ -25,7 +26,7 @@ namespace Unity.Kinematica
         {
             return new DebugMemory()
             {
-                costRecords = new NativeList<DebugCostRecord>(allocator),
+                costRecords = new UnsafeList<DebugCostRecord>(8, allocator),
                 buffer = Buffer.Create(capacity, allocator),
                 version = 1,
                 group = 0,

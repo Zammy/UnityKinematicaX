@@ -13,7 +13,7 @@ namespace Unity.Kinematica
         // Kinematica Public API
         //
 
-        public bool IsValid => isValid;
+        public bool IsValid => isValid == 1;
 
         /// <summary>
         /// Return blend duration between segments in seconds
