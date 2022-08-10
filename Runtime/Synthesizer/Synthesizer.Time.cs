@@ -97,8 +97,8 @@ namespace Unity.Kinematica
                         TimeIndex.Create(segmentIndex,
                             segment.destination.NumFrames);
 
-                    TriggerMarkers(
-                        samplingTime.timeIndex, remainder);
+                    // TriggerMarkers(
+                    //     samplingTime.timeIndex, remainder);
 
                     PlayAtTime(advance.samplingTime);
 
@@ -108,16 +108,16 @@ namespace Unity.Kinematica
                         TimeIndex.Create(
                             advance.samplingTime.segmentIndex);
 
-                    TriggerMarkers(
-                        timeIndex,
-                        advance.samplingTime.timeIndex);
+                    // TriggerMarkers(
+                    //     timeIndex,
+                    //     advance.samplingTime.timeIndex);
                 }
-                else
-                {
-                    TriggerMarkers(
-                        samplingTime.timeIndex,
-                        advance.samplingTime.timeIndex);
-                }
+                // else
+                // {
+                //     TriggerMarkers(
+                //         samplingTime.timeIndex,
+                //         advance.samplingTime.timeIndex);
+                // }
 
                 //
                 // Advance current sampling time

@@ -15,7 +15,7 @@ namespace Unity.Kinematica
 
         public int hashCode;
 
-        public IntPtr executeFunction;
+        // public IntPtr executeFunction;
 
         TraitType(Type type)
         {
@@ -27,30 +27,30 @@ namespace Unity.Kinematica
                     $"Trait type {type.FullName} must be unmanaged and blittable.");
             }
 
-            if (ImplementsTraitInterface(type))
-            {
-                //
-                // TODO: Find a way to call Trait.Execute directly
-                //
+            // if (ImplementsTraitInterface(type))
+            // {
+            //     //
+            //     // TODO: Find a way to call Trait.Execute directly
+            //     //
 
-                var executeSelf =
-                    type.GetMethod(nameof(ExecuteSelf),
-                        BindingFlags.Static | BindingFlags.Public);
+            //     var executeSelf =
+            //         type.GetMethod(nameof(ExecuteSelf),
+            //             BindingFlags.Static | BindingFlags.Public);
 
-                if (executeSelf == null)
-                {
-                    throw new InvalidOperationException(
-                        $"Trait type {type.FullName} must implement 'ExecuteSelf'.");
-                }
+            //     if (executeSelf == null)
+            //     {
+            //         throw new InvalidOperationException(
+            //             $"Trait type {type.FullName} must implement 'ExecuteSelf'.");
+            //     }
 
-                executeFunction = CompileFunction(type, executeSelf);
+            //     executeFunction = CompileFunction(type, executeSelf);
 
-                Assert.IsTrue(executeFunction != IntPtr.Zero);
-            }
-            else
-            {
-                executeFunction = IntPtr.Zero;
-            }
+            //     Assert.IsTrue(executeFunction != IntPtr.Zero);
+            // }
+            // else
+            // {
+            //     executeFunction = IntPtr.Zero;
+            // }
 
             hashCode = BurstRuntime.GetHashCode32(type);
 
@@ -94,21 +94,21 @@ namespace Unity.Kinematica
 
         delegate void ExecuteDelegate<T>(ref T self, ref MotionSynthesizer synthesizer);
 
-        [BurstCompile]
-        static void ExecuteSelf<T>(ref T self, ref MotionSynthesizer synthesizer) where T : Trait
-        {
-            //
-            // TODO: Unfortunately Burst doesn't accept instance methods
-            //       or generics when calling 'CompileFunctionPointer'...
-            //
-            // var executeThis = typeof(TraitType).GetMethod(
-            //     nameof(ExecuteSelf), BindingFlags.Static | BindingFlags.NonPublic);
+        // [BurstCompile]
+        // static void ExecuteSelf<T>(ref T self, ref MotionSynthesizer synthesizer) where T : Trait
+        // {
+        //     //
+        //     // TODO: Unfortunately Burst doesn't accept instance methods
+        //     //       or generics when calling 'CompileFunctionPointer'...
+        //     //
+        //     // var executeThis = typeof(TraitType).GetMethod(
+        //     //     nameof(ExecuteSelf), BindingFlags.Static | BindingFlags.NonPublic);
 
-            // var genericExecuteThis = executeThis.MakeGenericMethod(typeof(T));
-            //
+        //     // var genericExecuteThis = executeThis.MakeGenericMethod(typeof(T));
+        //     //
 
-            self.Execute(ref synthesizer);
-        }
+        //     self.Execute(ref synthesizer);
+        // }
 
         unsafe static IntPtr CompileFunctionGeneric<T>(MethodInfo executeSelf) where T : struct
         {
@@ -123,10 +123,10 @@ namespace Unity.Kinematica
             return *(IntPtr*)UnsafeUtility.AddressOf(ref functionPointer);
         }
 
-        static bool ImplementsTraitInterface(Type type)
-        {
-            return typeof(Trait).IsAssignableFrom(type);
-        }
+        // static bool ImplementsTraitInterface(Type type)
+        // {
+        //     return typeof(Trait).IsAssignableFrom(type);
+        // }
 
         static bool HasTraitAttribute(Type type)
         {

@@ -35,12 +35,12 @@ namespace Unity.Kinematica
     /// <seealso cref="Binary.Tag"/>
     /// <seealso cref="Binary.Marker"/>
     /// <seealso cref="Query"/>
-    public interface Trait
-    {
-        /// <summary>
-        /// Method that is to be executed if a marker
-        /// that carries this trait is encountered during playback.
-        /// </summary>
-        void Execute(ref MotionSynthesizer synthesizer);
-    }
+    // public interface Trait
+    // {
+    //     /// <summary>
+    //     /// Method that is to be executed if a marker
+    //     /// that carries this trait is encountered during playback.
+    //     /// </summary>
+    //     void Execute(ref MotionSynthesizer synthesizer);
+    // }
 }

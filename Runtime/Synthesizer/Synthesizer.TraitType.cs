@@ -13,7 +13,7 @@ namespace Unity.Kinematica
         {
             public int hashCode;
 
-            public IntPtr executeFunction;
+            // public IntPtr executeFunction;
 
             public TypeIndex typeIndex;
 
@@ -21,7 +21,7 @@ namespace Unity.Kinematica
             {
                 hashCode = source.hashCode;
 
-                executeFunction = source.executeFunction;
+                // executeFunction = source.executeFunction;
 
                 typeIndex = TypeIndex.Invalid;
             }
