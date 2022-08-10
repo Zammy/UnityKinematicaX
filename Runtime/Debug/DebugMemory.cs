@@ -26,7 +26,7 @@ namespace Unity.Kinematica
         {
             return new DebugMemory()
             {
-                costRecords = new UnsafeList<DebugCostRecord>(8, allocator),
+                costRecords = new UnsafeList<DebugCostRecord>(0, allocator),
                 buffer = Buffer.Create(capacity, allocator),
                 version = 1,
                 group = 0,

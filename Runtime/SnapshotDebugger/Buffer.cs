@@ -3,17 +3,14 @@ using Unity.Collections;
 using UnityEngine.Assertions;
 using Unity.Collections.LowLevel.Unsafe;
 using System.Reflection;
-using System.Linq;
 
 namespace Unity.SnapshotDebugger
 {
     public struct Buffer : System.IDisposable
     {
-        private UnsafeList<byte> bytes;
+        private NativeList<byte> bytes;
 
         public int Length => bytes.Length;
-
-        public UnsafeList<byte> Bytes { get => bytes; }
 
         public bool CanRead
         {
@@ -44,7 +41,7 @@ namespace Unity.SnapshotDebugger
         {
             return new Buffer()
             {
-                bytes = new UnsafeList<byte>(8, allocator)
+                bytes = new NativeList<byte>(allocator)
             };
         }
 
@@ -52,7 +49,7 @@ namespace Unity.SnapshotDebugger
         {
             return new Buffer()
             {
-                bytes = new UnsafeList<byte>(capacity, allocator)
+                bytes = new NativeList<byte>(capacity, allocator)
             };
         }
 
@@ -60,8 +57,8 @@ namespace Unity.SnapshotDebugger
         {
             var buffer = Create(allocator);
 
-            var elements = new NativeArray<byte>(data, Allocator.Temp);
-            buffer.Append(elements);
+            NativeArray<byte> elements = new NativeArray<byte>(data, Allocator.Temp);
+            buffer.bytes.AddRange(elements);
             elements.Dispose();
 
             return buffer;
@@ -89,18 +86,12 @@ namespace Unity.SnapshotDebugger
 
         public void Append(NativeArray<byte> elements)
         {
-            for (int i = 0; i < elements.Length; i++)
-            {
-                bytes.Add(elements[i]);
-            }
+            bytes.AddRange(elements);
         }
 
         public void Copy(Buffer from)
         {
-            for (int i = 0; i < from.Bytes.Length; i++)
-            {
-                bytes.Add(from.Bytes[i]);
-            }
+            bytes.AddRange(from.bytes.AsArray());
         }
 
         public byte ReadByte()
@@ -124,7 +115,7 @@ namespace Unity.SnapshotDebugger
             int startOffset = bytes.Length;
             bytes.Resize(startOffset + size, NativeArrayOptions.UninitializedMemory);
 
-            return new NativeSlice<byte>(AsArray(), startOffset, size);
+            return new NativeSlice<byte>(bytes.AsArray(), startOffset, size);
         }
 
         public T ReadBlittable<T>() where T : struct
@@ -168,12 +159,6 @@ namespace Unity.SnapshotDebugger
             MethodInfo writeBlittableMethod = GetType().GetMethod(nameof(WriteBlittable));
             MethodInfo writeMethod = writeBlittableMethod.MakeGenericMethod(new Type[] { val.GetType() });
             writeMethod.Invoke(this, new object[] { val });
-        }
-
-        public unsafe NativeArray<byte> AsArray()
-        {
-            var array = NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<byte>(bytes.Ptr, bytes.Length, Allocator.None);
-            return array;
         }
     }
 }
