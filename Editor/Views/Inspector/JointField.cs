@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -140,6 +141,9 @@ namespace Unity.Kinematica.Editor
 
         void ToggleJoint(string joint)
         {
+            if (String.IsNullOrEmpty(joint))
+                return;
+                
             if (m_Metric.joints.Contains(joint))
             {
                 Undo.IncrementCurrentGroup();
